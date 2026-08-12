@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Mục Xe BYD - 19 Mẫu Xe Điện & Cắm Điện | Giá Sỉ FOB</title>
+    <meta name="description" content="19 mẫu xe BYD mới nhất: Atto 2, Atto 3, Qin Plus, Qin L, Song Pro, Song L, Song Ultra. Giá sỉ FOB từ 8.94万 nhân dân tệ.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VB3E0CEPTX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VB3E0CEPTX');
+</script>
+
+<!-- Microsoft Clarity Heatmap -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y169be5r4s");
+</script>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container nav-inner">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">BYD</div>
+            <span>Xe Điện VN</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="cars.html" class="active">Danh mục xe</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li>
+            <li><a href="index.html#fob">Mô hình FOB</a></li>
+            <li><a href="index.html#tax">Thuế & Hải quan</a></li>
+            <li><a href="contact.html" class="nav-cta">Nhận báo giá</a></li>
+        </ul>
+        <button class="mobile-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>Danh Mục Xe BYD</h1>
+        <p>19 mẫu xe điện và xe cắm điện BYD mới nhất, giá sỉ FOB cảng Trung Quốc</p>
+        <div class="breadcrumb">
+            <a href="index.html">Trang chủ</a>
+            <span>/</span>
+            <span>Danh mục xe</span>
+        </div>
+    </div>
+</section>
+
+<!-- Car List -->
+<section class="section">
+    <div class="container">
+        <!-- Category Tabs -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:40px">
+            <div style="background:var(--primary-light);padding:20px;border-radius:var(--radius);text-align:center">
+                <div style="font-size:28px;font-weight:800;color:var(--primary)">7</div>
+                <div style="font-size:14px;color:var(--gray-700)">Xe điện BEV</div>
+            </div>
+            <div style="background:var(--accent-light);padding:20px;border-radius:var(--radius);text-align:center">
+                <div style="font-size:28px;font-weight:800;color:var(--accent)">12</div>
+                <div style="font-size:14px;color:var(--gray-700)">Xe cắm điện DM-i</div>
+            </div>
+            <div style="background:#e3f2fd;padding:20px;border-radius:var(--radius);text-align:center">
+                <div style="font-size:28px;font-weight:800;color:#1976d2">7</div>
+                <div style="font-size:14px;color:var(--gray-700)">Sedan</div>
+            </div>
+            <div style="background:#f3e5f5;padding:20px;border-radius:var(--radius);text-align:center">
+                <div style="font-size:28px;font-weight:800;color:#7b1fa2">12</div>
+                <div style="font-size:14px;color:var(--gray-700)">SUV</div>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterCars('all', this)">Tất cả (19)</button>
+            <button class="filter-btn" onclick="filterCars('BEV', this)">⚡ Xe điện BEV (7)</button>
+            <button class="filter-btn" onclick="filterCars('DM-i', this)">⛽ Cắm điện DM-i (12)</button>
+            <button class="filter-btn" onclick="filterCars('sedan', this)">🚙 Sedan (7)</button>
+            <button class="filter-btn" onclick="filterCars('suv', this)">🚐 SUV (12)</button>
+            <button class="filter-btn" onclick="filterCars('under10', this)">💰 Dưới 10万 (2)</button>
+        </div>
+
+        <!-- Car Grid -->
+        <div class="car-grid" id="carGrid"></div>
+
+        <!-- Note -->
+        <div style="margin-top:40px;padding:25px;background:var(--gray-100);border-radius:var(--radius);border-left:4px solid var(--primary)">
+            <h4 style="margin-bottom:10px;color:var(--dark)">📝 Lưu ý về giá</h4>
+            <ul style="font-size:14px;color:var(--gray-700);line-height:2">
+                <li>• Giá trên là giá FOB cảng Thâm Quyến (Trung Quốc), chưa bao gồm vận chuyển biển, thuế nhập khẩu và phí thông quan tại Việt Nam</li>
+                <li>• Giá thị trường là giá bán lẻ tham khảo tại Việt Nam, thực tế có thể thay đổi tùy thời điểm và đại lý</li>
+                <li>• Đơn vị tính: 万 nhân dân tệ (1万 = 10.000 RMB ≈ 35 triệu VND)</li>
+                <li>• Giá có thể thay đổi tùy số lượng đặt hàng và chính sách khuyến mãi của BYD</li>
+                <li>• Liên hệ để nhận báo giá chi tiết nhất cho từng mẫu xe</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section contact-section">
+    <div class="container" style="text-align:center">
+        <h2 style="font-size:32px;font-weight:800;margin-bottom:15px">Không Tìm Thấy Xe Bạn Muốn?</h2>
+        <p style="font-size:18px;opacity:0.9;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto">Chúng tôi có thể cung cấp hầu hết các mẫu xe BYD. Liên hệ để được tư vấn mẫu xe phù hợp nhất</p>
+        <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap">
+            <a href="contact.html" class="btn btn-accent btn-lg">📋 Yêu cầu báo giá</a>
+            <a href="https://zalo.me/84123456789" target="_blank" class="btn btn-outline-white btn-lg">💬 Chat Zalo</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4>BYD Xe Điện Việt Nam</h4>
+                <p>Nhà cung cấp xe điện BYD trực tiếp từ Trung Quốc. Chuyên xuất khẩu xe điện và xe cắm điện sang thị trường Việt Nam và các quốc gia Đông Nam Á.</p>
+                <p>Giá sỉ FOB · Hỗ trợ thủ tục · Giao hàng nhanh</p>
+                <div class="footer-social">
+                    <a href="https://zalo.me/84123456789" target="_blank" title="Zalo">💬</a>
+                    <a href="https://wa.me/8613338467295" target="_blank" title="WhatsApp">📱</a>
+                    <a href="mailto:sales@byd-vietnam-export.com" title="Email">✉️</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Sản phẩm</h5>
+                <ul>
+                    <li><a href="cars.html?filter=BEV">Xe điện BEV</a></li>
+                    <li><a href="cars.html?filter=DM-i">Xe cắm điện DM-i</a></li>
+                    <li><a href="cars.html?filter=sedan">Sedan</a></li>
+                    <li><a href="cars.html?filter=suv">SUV</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Hỗ trợ</h5>
+                <ul>
+                    <li><a href="index.html#fob">Mô hình FOB</a></li>
+                    <li><a href="index.html#tax">Thuế & Hải quan</a></li>
+                    <li><a href="index.html#faq">Câu hỏi thường gặp</a></li>
+                    <li><a href="contact.html">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Liên hệ</h5>
+                <ul>
+                    <li>📱 Zalo: +86 133 3846 7295</li>
+                    <li>📧 sales@byd-vietnam-export.com</li>
+                    <li>📍 Thâm Quyến, Trung Quốc</li>
+                    <li>⏰ 9:00 - 18:00 (GMT+7)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 BYD Xe Điện Việt Nam. All rights reserved. | BYD là thương hiệu của BYD Auto Co., Ltd.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Floating Buttons -->
+<div class="floating-buttons">
+    <a href="https://zalo.me/84123456789" target="_blank" class="float-btn float-zalo" title="Chat Zalo">💬</a>
+    <a href="https://wa.me/8613338467295" target="_blank" class="float-btn float-whatsapp" title="WhatsApp">📱</a>
+    <a href="tel:+8613338467295" class="float-btn float-phone" title="Gọi điện">📞</a>
+</div>
+
+<script src="js/cars-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+    // Render all cars on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const grid = document.getElementById('carGrid');
+        if (grid) {
+            grid.innerHTML = cars.map(car => renderCarCard(car)).join('');
+        }
+
+        // Check URL for filter parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const filter = urlParams.get('filter');
+        if (filter) {
+            setTimeout(() => {
+                const buttons = document.querySelectorAll('.filter-btn');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                filterCars(filter, null);
+                // Find and activate matching button
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(filter) || 
+                        (filter === 'BEV' && btn.textContent.includes('BEV')) ||
+                        (filter === 'DM-i' && btn.textContent.includes('DM-i')) ||
+                        (filter === 'sedan' && btn.textContent.includes('Sedan')) ||
+                        (filter === 'suv' && btn.textContent.includes('SUV'))) {
+                        btn.classList.add('active');
+                    }
+                });
+            }, 100);
+        }
+    });
+</script>
+
+</body>
+</html>
