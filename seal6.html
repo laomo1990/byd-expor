@@ -61,6 +61,29 @@ nav .cta-btn{background:#0068FF;color:#fff;padding:8px 20px;border-radius:6px;fo
 footer{background:var(--dark);color:#6c757d;text-align:center;padding:24px 20px;font-size:13px}
 @media(max-width:768px){.product-grid,.detail-grid{grid-template-columns:1fr}}
 </style>
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+  
+  // Track Zalo button clicks
+  document.addEventListener('DOMContentLoaded', function() {
+    var zaloLinks = document.querySelectorAll('a[href*="zalo.me"]');
+    zaloLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        gtag('event', 'click', {
+          'event_category': 'Zalo',
+          'event_label': 'Zalo Button Click - ' + document.title,
+          'value': 1
+        });
+      });
+    });
+  });
+</script>
 </head>
 <body>
 <nav>
