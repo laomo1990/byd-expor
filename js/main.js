@@ -201,7 +201,7 @@ function renderCarCard(car) {
                 </div>
                 <div class="car-actions">
                     <a href="car-detail.html?id=${car.id}" class="car-btn car-btn-detail">Chi tiết</a>
-                    <a href="${getZaloLink(car.name)}" target="_blank" class="car-btn car-btn-zalo">📱 Zalo</a>
+                    <a href="${getZaloLink(car.name)}" target="_blank" class="car-btn car-btn-zalo"><span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 8.5h-3v3h-1.5v-3h-3V9h3V6h1.5v3h3v1.5z"/></svg></span> Zalo</a>
                 </div>
             </div>
         </div>
