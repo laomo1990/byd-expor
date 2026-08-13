@@ -1,13 +1,13 @@
 // ===== Configuration =====
 const CONFIG = {
-    zaloNumber: '84123456789', // ← Replace with your real Zalo number
-    whatsappNumber: '8613338467295', // ← Replace with your real WhatsApp number
+    zaloNumber: '8615750711697',
+    whatsappNumber: '8613338467295',
     phoneNumber: '+86 133 3846 7295',
     email: 'youqianxu913@gmail.com',
-    wechatId: '', // WeChat via QR code only
-    formspreeEndpoint: 'https://formspree.io/f/your-form-id', // ← Replace with your Formspree ID
-    feishuWebhook: '', // ← Optional: your Feishu webhook URL
-    exchangeRate: 3500 // 1 RMB = 3500 VND
+    wechatId: '',
+    formspreeEndpoint: '',
+    feishuWebhook: 'https://open.feishu.cn/open-apis/bot/v2/hook/b6326912-2e53-4daf-ba16-2d6eeb6f476c',
+    exchangeRate: 3500
 };
 
 // ===== Common JS Functions =====
@@ -71,7 +71,7 @@ function formatVND(million) {
     return million + ' triệu VNĐ';
 }
 
-// ===== Form Submit (Formspree + Feishu integration) =====
+// ===== Form Submit (Feishu Webhook + Mailto fallback) =====
 function submitForm(e) {
     e.preventDefault();
     const form = e.target;
@@ -79,13 +79,35 @@ function submitForm(e) {
     const name = formData.get('name') || 'Khách hàng';
     const submitBtn = form.querySelector('.form-submit');
     const successMsg = form.querySelector('.form-success');
-
+    
     // Show loading
     submitBtn.disabled = true;
     submitBtn.textContent = 'Đang gửi...';
-
-    // Try Formspree first if configured
-    if (CONFIG.formspreeEndpoint && !CONFIG.formspreeEndpoint.includes('your-form-id')) {
+    
+    // Priority 1: Feishu Webhook (方案B)
+    if (CONFIG.feishuWebhook) {
+        const data = {
+            msg_type: 'text',
+            content: {
+                text: `【BYD越南-新客户询价】\n\n姓名: ${formData.get('name')}\n公司: ${formData.get('company') || 'N/A'}\n电话: ${formData.get('phone')}\n邮箱: ${formData.get('email') || 'N/A'}\n车型: ${formData.get('model') || 'N/A'}\n数量: ${formData.get('quantity') || 'N/A'}\n角色: ${formData.get('role') || 'N/A'}\n留言: ${formData.get('message') || 'N/A'}`
+            }
+        };
+        fetch(CONFIG.feishuWebhook, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                showSuccess();
+            } else {
+                showFallback();
+            }
+        }).catch(() => {
+            showFallback();
+        });
+    } 
+    // Priority 2: Formspree (备选)
+    else if (CONFIG.formspreeEndpoint) {
         fetch(CONFIG.formspreeEndpoint, {
             method: 'POST',
             body: formData,
@@ -99,40 +121,28 @@ function submitForm(e) {
         }).catch(() => {
             showFallback();
         });
-    } else if (CONFIG.feishuWebhook) {
-        // Send to Feishu webhook
-        const data = {
-            msg_type: 'text',
-            content: {
-                text: `🚗 新客户询价\n\n姓名: ${formData.get('name')}\n公司: ${formData.get('company') || 'N/A'}\n电话: ${formData.get('phone')}\n邮箱: ${formData.get('email') || 'N/A'}\n车型: ${formData.get('model') || 'N/A'}\n数量: ${formData.get('quantity') || 'N/A'}\n留言: ${formData.get('message') || 'N/A'}`
-            }
-        };
-        fetch(CONFIG.feishuWebhook, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        }).then(() => showSuccess()).catch(() => showFallback());
-    } else {
-        // Fallback: open mail client
-        setTimeout(showFallback, 800);
+    } 
+    // Priority 3: Mailto fallback
+    else {
+        setTimeout(showFallback, 500);
     }
-
+    
     function showSuccess() {
         submitBtn.disabled = false;
-        submitBtn.textContent = '🚀 Gửi yêu cầu nhận báo giá';
+        submitBtn.innerHTML = '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.5c3.5 0 7 2 7 6.5 0 3-1.5 5.5-3 7l-1 1.5v3l-3-1.5h-1L8 20.5v-3L7 16c-1.5-1.5-3-4-3-7.5 0-4.5 3.5-6 8-6zM12 4c-3 0-5.5 1.5-5.5 5 0 2.5 1 4.5 2.2 5.8.5.5 1 .8 1.3.8h4c.3 0 .8-.3 1.3-.8C16.5 13.5 17.5 11.5 17.5 9c0-3.5-2.5-5-5.5-5zm-1.5 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/></svg></span> Gửi yêu cầu nhận báo giá';
         if (successMsg) {
             successMsg.classList.add('show');
-            successMsg.textContent = '✅ Cảm ơn ' + name + '! Chúng tôi đã nhận được thông tin và sẽ liên hệ trong 2 giờ làm việc.';
+            successMsg.innerHTML = '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Cảm ơn ' + name + '! Chúng tôi đã nhận được thông tin và sẽ liên hệ trong 2 giờ làm việc.';
         } else {
             alert('Cảm ơn ' + name + '! Chúng tôi đã nhận được thông tin của bạn và sẽ liên hệ trong 2 giờ làm việc.');
         }
         form.reset();
         setTimeout(() => { if (successMsg) successMsg.classList.remove('show'); }, 5000);
     }
-
+    
     function showFallback() {
         submitBtn.disabled = false;
-        submitBtn.textContent = '🚀 Gửi yêu cầu nhận báo giá';
+        submitBtn.innerHTML = '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.5c3.5 0 7 2 7 6.5 0 3-1.5 5.5-3 7l-1 1.5v3l-3-1.5h-1L8 20.5v-3L7 16c-1.5-1.5-3-4-3-7.5 0-4.5 3.5-6 8-6zM12 4c-3 0-5.5 1.5-5.5 5 0 2.5 1 4.5 2.2 5.8.5.5 1 .8 1.3.8h4c.3 0 .8-.3 1.3-.8C16.5 13.5 17.5 11.5 17.5 9c0-3.5-2.5-5-5.5-5zm-1.5 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/></svg></span> Gửi yêu cầu nhận báo giá';
         const subject = encodeURIComponent('Yêu cầu báo giá xe BYD từ ' + name);
         const body = encodeURIComponent(
             `Họ tên: ${formData.get('name')}\n` +
@@ -146,7 +156,7 @@ function submitForm(e) {
         window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
         if (successMsg) {
             successMsg.classList.add('show');
-            successMsg.textContent = '✅ Đã mở ứng dụng email. Vui lòng gửi email để hoàn tất.';
+            successMsg.innerHTML = '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span> Đã mở ứng dụng email. Vui lòng gửi email để hoàn tất.';
         }
     }
 }
@@ -167,10 +177,10 @@ function submitQuickQuote(e) {
 // ===== Car Card Rendering (used in multiple pages) =====
 function renderCarCard(car) {
     const tagMap = {
-        'hot': '🔥 HOT',
-        'new': '✨ NEW',
-        'best': '⭐ BEST',
-        'flagship': '🏆 FLAGSHIP'
+        'hot': '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg></span> HOT',
+        'new': '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2zm7 10l.8 2.8L22.5 16l-2.7.8L19 19.5l-.8-2.7L15.5 16l2.7-.8L19 12z"/></svg></span> NEW',
+        'best': '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span> BEST',
+        'flagship': '<span class="icon-svg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg></span> FLAGSHIP'
     };
 
     return `
