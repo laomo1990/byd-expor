@@ -1,3 +1,14 @@
+// ===== Configuration =====
+const CONFIG = {
+    zaloNumber: '84123456789', // ← Replace with your real Zalo number
+    whatsappNumber: '8613338467295', // ← Replace with your real WhatsApp number
+    phoneNumber: '+86 133 3846 7295',
+    email: 'sales@byd-vietnam-export.com', // ← Replace with your real email
+    formspreeEndpoint: 'https://formspree.io/f/your-form-id', // ← Replace with your Formspree ID
+    feishuWebhook: '', // ← Optional: your Feishu webhook URL
+    exchangeRate: 3500 // 1 RMB = 3500 VND
+};
+
 // ===== Common JS Functions =====
 
 // Mobile Menu Toggle
@@ -22,6 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
             link.classList.add('active');
         }
     });
+
+    // Initialize sticky bottom bar if on car detail page
+    initStickyBar();
 });
 
 // FAQ Toggle
@@ -32,7 +46,31 @@ function toggleFaq(el) {
     if (!wasActive) item.classList.add('active');
 }
 
-// Form Submit (Formspree integration)
+// Generate Zalo link with prefilled message
+function getZaloLink(carName) {
+    const message = carName 
+        ? `Xin chào, tôi muốn hỏi giá xe ${carName}. Vui lòng gửi báo giá chi tiết.`
+        : 'Xin chào, tôi muốn hỏi giá xe BYD. Vui lòng tư vấn.';
+    return `https://zalo.me/${CONFIG.zaloNumber}?g=${encodeURIComponent(message)}`;
+}
+
+// Generate WhatsApp link with prefilled message
+function getWhatsAppLink(carName) {
+    const message = carName 
+        ? `Hello, I want to inquire about ${carName}. Please send detailed pricing.`
+        : 'Hello, I want to inquire about BYD cars. Please advise.';
+    return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+// Format VND price
+function formatVND(million) {
+    if (million >= 1000) {
+        return (million / 1000).toFixed(2) + ' tỷ VNĐ';
+    }
+    return million + ' triệu VNĐ';
+}
+
+// ===== Form Submit (Formspree + Feishu integration) =====
 function submitForm(e) {
     e.preventDefault();
     const form = e.target;
@@ -45,18 +83,9 @@ function submitForm(e) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Đang gửi...';
 
-    // ===== FORM NOTIFICATION CONFIGURATION =====
-    // Option 1: Formspree (Recommended - no backend needed)
-    // Register at https://formspree.io, create a form, and replace the endpoint below
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/your-form-id'; // ← Replace with your Formspree ID
-
-    // Option 2: Feishu/Lark Webhook
-    // Create a custom bot in Feishu group, get webhook URL, replace below
-    const FEISHU_WEBHOOK = ''; // ← Optional: your Feishu webhook URL
-
     // Try Formspree first if configured
-    if (FORMSPREE_ENDPOINT && !FORMSPREE_ENDPOINT.includes('your-form-id')) {
-        fetch(FORMSPREE_ENDPOINT, {
+    if (CONFIG.formspreeEndpoint && !CONFIG.formspreeEndpoint.includes('your-form-id')) {
+        fetch(CONFIG.formspreeEndpoint, {
             method: 'POST',
             body: formData,
             headers: { 'Accept': 'application/json' }
@@ -69,7 +98,7 @@ function submitForm(e) {
         }).catch(() => {
             showFallback();
         });
-    } else if (FEISHU_WEBHOOK) {
+    } else if (CONFIG.feishuWebhook) {
         // Send to Feishu webhook
         const data = {
             msg_type: 'text',
@@ -77,13 +106,13 @@ function submitForm(e) {
                 text: `🚗 新客户询价\n\n姓名: ${formData.get('name')}\n公司: ${formData.get('company') || 'N/A'}\n电话: ${formData.get('phone')}\n邮箱: ${formData.get('email') || 'N/A'}\n车型: ${formData.get('model') || 'N/A'}\n数量: ${formData.get('quantity') || 'N/A'}\n留言: ${formData.get('message') || 'N/A'}`
             }
         };
-        fetch(FEISHU_WEBHOOK, {
+        fetch(CONFIG.feishuWebhook, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         }).then(() => showSuccess()).catch(() => showFallback());
     } else {
-        // Fallback: show success message (no actual sending)
+        // Fallback: open mail client
         setTimeout(showFallback, 800);
     }
 
@@ -101,7 +130,6 @@ function submitForm(e) {
     }
 
     function showFallback() {
-        // Fallback: open mail client
         submitBtn.disabled = false;
         submitBtn.textContent = '🚀 Gửi yêu cầu nhận báo giá';
         const subject = encodeURIComponent('Yêu cầu báo giá xe BYD từ ' + name);
@@ -114,7 +142,7 @@ function submitForm(e) {
             `Số lượng: ${formData.get('quantity')}\n` +
             `Nội dung: ${formData.get('message')}`
         );
-        window.location.href = `mailto:sales@byd-vietnam-export.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
         if (successMsg) {
             successMsg.classList.add('show');
             successMsg.textContent = '✅ Đã mở ứng dụng email. Vui lòng gửi email để hoàn tất.';
@@ -122,7 +150,20 @@ function submitForm(e) {
     }
 }
 
-// Car Card Rendering (used in multiple pages)
+// Quick quote form (Hero section)
+function submitQuickQuote(e) {
+    e.preventDefault();
+    const phone = e.target.querySelector('input').value;
+    if (!phone) {
+        alert('Vui lòng nhập số điện thoại');
+        return;
+    }
+    // Open Zalo with prefilled message
+    const message = `Xin chào, tôi số điện thoại ${phone}, muốn nhận báo giá xe BYD.`;
+    window.open(`https://zalo.me/${CONFIG.zaloNumber}?g=${encodeURIComponent(message)}`, '_blank');
+}
+
+// ===== Car Card Rendering (used in multiple pages) =====
 function renderCarCard(car) {
     const tagMap = {
         'hot': '🔥 HOT',
@@ -130,11 +171,13 @@ function renderCarCard(car) {
         'best': '⭐ BEST',
         'flagship': '🏆 FLAGSHIP'
     };
+
     return `
         <div class="car-card">
             <a href="car-detail.html?id=${car.id}">
                 <div class="car-image">
                     ${car.tag ? `<span class="car-tag tag-${car.tag}">${tagMap[car.tag]}</span>` : ''}
+                    ${car.sold ? `<span class="car-sold">Đã bán ${car.sold}+</span>` : ''}
                     <img src="${car.img}" alt="${car.name}" loading="lazy" onerror="this.style.display='none'">
                 </div>
             </a>
@@ -149,37 +192,85 @@ function renderCarCard(car) {
                     <span class="spec-item">${car.power}</span>
                 </div>
                 <div class="car-prices">
-                    <span class="car-fob">¥${car.fob}万</span>
-                    <span class="car-market">¥${car.market}万 thị trường</span>
+                    <div class="car-price-main">
+                        <span class="car-fob">¥${car.fob}万</span>
+                        <span class="car-fob-vnd">~${formatVND(car.vndFob)}</span>
+                    </div>
+                    <div class="car-market">¥${car.market}万 thị trường (~${formatVND(car.vndMarket)})</div>
                 </div>
                 <div class="car-actions">
                     <a href="car-detail.html?id=${car.id}" class="car-btn car-btn-detail">Chi tiết</a>
-                    <a href="https://zalo.me/84123456789" target="_blank" class="car-btn car-btn-zalo">📱 Zalo</a>
+                    <a href="${getZaloLink(car.name)}" target="_blank" class="car-btn car-btn-zalo">📱 Zalo</a>
                 </div>
             </div>
         </div>
     `;
 }
 
-// Filter Cars
+// ===== Filter Cars =====
+let currentFilter = { type: 'all', price: 'all' };
+
 function filterCars(type, btn) {
+    currentFilter.type = type;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
+    applyFilters();
+}
 
+function filterByPrice(price) {
+    currentFilter.price = price;
+    applyFilters();
+}
+
+function applyFilters() {
     let filtered = cars;
-    if (type === 'BEV') filtered = cars.filter(c => c.type === 'BEV');
-    else if (type === 'DM-i') filtered = cars.filter(c => c.type === 'DM-i');
-    else if (type === 'sedan') filtered = cars.filter(c => c.body === 'sedan');
-    else if (type === 'suv') filtered = cars.filter(c => c.body === 'suv');
-    else if (type === 'under10') filtered = cars.filter(c => c.fob < 10);
+
+    // Type filter
+    if (currentFilter.type === 'BEV') filtered = filtered.filter(c => c.type === 'BEV');
+    else if (currentFilter.type === 'DM-i') filtered = filtered.filter(c => c.type === 'DM-i');
+    else if (currentFilter.type === 'sedan') filtered = filtered.filter(c => c.body === 'sedan');
+    else if (currentFilter.type === 'suv') filtered = filtered.filter(c => c.body === 'suv');
+    else if (currentFilter.type === 'under10') filtered = filtered.filter(c => c.fob < 10);
+
+    // Price filter
+    if (currentFilter.price === 'under10') filtered = filtered.filter(c => c.fob < 10);
+    else if (currentFilter.price === '10-15') filtered = filtered.filter(c => c.fob >= 10 && c.fob < 15);
+    else if (currentFilter.price === '15-20') filtered = filtered.filter(c => c.fob >= 15 && c.fob < 20);
+    else if (currentFilter.price === 'over20') filtered = filtered.filter(c => c.fob >= 20);
 
     const grid = document.getElementById('carGrid');
     if (grid) {
-        grid.innerHTML = filtered.map(car => renderCarCard(car)).join('');
+        if (filtered.length === 0) {
+            grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:#6c757d;">Không tìm thấy xe phù hợp với bộ lọc.</p>';
+        } else {
+            grid.innerHTML = filtered.map(car => renderCarCard(car)).join('');
+        }
     }
 }
 
-// Smooth scroll for anchor links
+// ===== Sticky Bottom Bar (Car Detail Page) =====
+function initStickyBar() {
+    const stickyBar = document.getElementById('stickyBottomBar');
+    if (!stickyBar) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 600) {
+            stickyBar.classList.add('show');
+        } else {
+            stickyBar.classList.remove('show');
+        }
+    });
+}
+
+// ===== Floating Buttons (Mobile close) =====
+function closeFloatingButtons() {
+    const floats = document.querySelector('.floating-buttons');
+    if (floats) {
+        floats.style.display = 'none';
+    }
+}
+
+// ===== Smooth scroll for anchor links =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const target = document.querySelector(this.getAttribute('href'));
@@ -190,7 +281,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar scroll effect
+// ===== Navbar scroll effect =====
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
@@ -201,4 +292,17 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
     }
     lastScroll = currentScroll;
+});
+
+// ===== Update all Zalo links on page load =====
+window.addEventListener('load', function() {
+    // Update floating buttons
+    const floatZalo = document.querySelector('.float-zalo');
+    if (floatZalo) floatZalo.href = getZaloLink();
+    
+    const floatWhatsapp = document.querySelector('.float-whatsapp');
+    if (floatWhatsapp) floatWhatsapp.href = getWhatsAppLink();
+    
+    const floatPhone = document.querySelector('.float-phone');
+    if (floatPhone) floatPhone.href = 'tel:' + CONFIG.phoneNumber.replace(/\s/g, '');
 });
