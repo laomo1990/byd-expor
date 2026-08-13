@@ -3,7 +3,8 @@ const CONFIG = {
     zaloNumber: '84123456789', // ← Replace with your real Zalo number
     whatsappNumber: '8613338467295', // ← Replace with your real WhatsApp number
     phoneNumber: '+86 133 3846 7295',
-    email: 'sales@byd-vietnam-export.com', // ← Replace with your real email
+    email: 'youqianxu913@gmail.com',
+    wechatId: '', // WeChat via QR code only
     formspreeEndpoint: 'https://formspree.io/f/your-form-id', // ← Replace with your Formspree ID
     feishuWebhook: '', // ← Optional: your Feishu webhook URL
     exchangeRate: 3500 // 1 RMB = 3500 VND
@@ -306,3 +307,69 @@ window.addEventListener('load', function() {
     const floatPhone = document.querySelector('.float-phone');
     if (floatPhone) floatPhone.href = 'tel:' + CONFIG.phoneNumber.replace(/\s/g, '');
 });
+
+// ===== QR Code Modal (WeChat) =====
+function showWeChatQR() {
+    // Remove existing modal if any
+    const existing = document.querySelector('.qr-modal-overlay');
+    if (existing) existing.remove();
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'qr-modal-overlay';
+    overlay.onclick = function(e) {
+        if (e.target === overlay) overlay.remove();
+    };
+    
+    overlay.innerHTML = `
+        <div class="qr-modal">
+            <div class="qr-modal-close" onclick="this.closest('.qr-modal-overlay').remove()">×</div>
+            <h4>WeChat (微信)</h4>
+            <p>Quét mã QR để thêm liên hệ</p>
+            <img src="images/qr-wechat.png" alt="WeChat QR Code">
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+    
+    // Restore scroll when closed
+    const observer = new MutationObserver(() => {
+        if (!document.body.contains(overlay)) {
+            document.body.style.overflow = '';
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true });
+}
+
+function showWhatsAppQR() {
+    const existing = document.querySelector('.qr-modal-overlay');
+    if (existing) existing.remove();
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'qr-modal-overlay';
+    overlay.onclick = function(e) {
+        if (e.target === overlay) overlay.remove();
+    };
+    
+    overlay.innerHTML = `
+        <div class="qr-modal">
+            <div class="qr-modal-close" onclick="this.closest('.qr-modal-overlay').remove()">×</div>
+            <h4>WhatsApp</h4>
+            <p>Quét mã QR hoặc mở trực tiếp</p>
+            <img src="images/qr-whatsapp.jpg" alt="WhatsApp QR Code" style="margin-bottom:14px">
+            <a href="https://wa.me/8613338467295" target="_blank" class="qr-action-btn qr-btn-whatsapp" style="display:inline-block;width:auto;padding:10px 30px">Mở WhatsApp</a>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+    
+    const observer = new MutationObserver(() => {
+        if (!document.body.contains(overlay)) {
+            document.body.style.overflow = '';
+            observer.disconnect();
+        }
+    });
+    observer.observe(document.body, { childList: true });
+}
