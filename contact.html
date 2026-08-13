@@ -66,68 +66,119 @@
     <div class="container">
         <div class="contact-grid">
             <!-- Contact Info -->
-            <div class="contact-info" style="color:var(--dark)">
-                <h3 style="font-size:24px;margin-bottom:25px;color:var(--dark)">Thông Tin Liên Hệ</h3>
+            <div class="contact-info">
+                <h3 class="contact-info-title">Thông Tin Liên Hệ</h3>
+                <p class="contact-info-subtitle">Quét mã QR để liên hệ nhanh chóng</p>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:var(--primary-light)">📱</div>
-                    <div>
-                        <h5 style="color:var(--gray-500)">Zalo / WhatsApp</h5>
-                        <p style="color:var(--dark)">+86 133 3846 7295</p>
-                        <a href="https://zalo.me/84123456789" target="_blank" style="color:var(--primary);font-size:14px;font-weight:600">→ Chat Zalo ngay</a>
+                <div class="qr-showcase qr-showcase-3">
+                    <div class="qr-card">
+                        <div class="qr-card-header">
+                            <span class="qr-icon qr-icon-zalo">💬</span>
+                            <div>
+                                <h5>Zalo</h5>
+                                <p>Quét mã để kết nối</p>
+                            </div>
+                        </div>
+                        <div class="qr-image-wrap">
+                            <img src="images/qr-zalo.png" alt="Zalo QR Code" class="qr-image">
+                        </div>
+                        <a href="https://zalo.me/84123456789" target="_blank" class="qr-action-btn qr-btn-zalo">Mở Zalo</a>
+                    </div>
+                    <div class="qr-card">
+                        <div class="qr-card-header">
+                            <span class="qr-icon qr-icon-whatsapp">📱</span>
+                            <div>
+                                <h5>WhatsApp</h5>
+                                <p>BYD Alex Zeng</p>
+                            </div>
+                        </div>
+                        <div class="qr-image-wrap">
+                            <img src="images/qr-whatsapp.jpg" alt="WhatsApp QR Code" class="qr-image">
+                        </div>
+                        <a href="https://wa.me/8613338467295" target="_blank" class="qr-action-btn qr-btn-whatsapp">Mở WhatsApp</a>
+                    </div>
+                    <div class="qr-card">
+                        <div class="qr-card-header">
+                            <span class="qr-icon qr-icon-wechat">💚</span>
+                            <div>
+                                <h5>WeChat (微信)</h5>
+                                <p>BYD Alex Zeng</p>
+                            </div>
+                        </div>
+                        <div class="qr-image-wrap">
+                            <img src="images/qr-wechat.png" alt="WeChat QR Code" class="qr-image">
+                        </div>
+                        <span class="qr-action-btn qr-btn-wechat">Quét mã để thêm</span>
                     </div>
                 </div>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:var(--accent-light)">✉️</div>
-                    <div>
-                        <h5 style="color:var(--gray-500)">Email</h5>
-                        <p style="color:var(--dark)">sales@byd-vietnam-export.com</p>
-                        <a href="mailto:sales@byd-vietnam-export.com" style="color:var(--primary);font-size:14px;font-weight:600">→ Gửi email</a>
+                <div class="contact-cards">
+                    <div class="contact-card contact-card-email">
+                        <div class="contact-card-icon">✉️</div>
+                        <div class="contact-card-content">
+                            <h5>Email</h5>
+                            <p class="contact-card-value">youqianxu913@gmail.com</p>
+                            <div class="contact-card-actions">
+                                <a href="mailto:youqianxu913@gmail.com" class="contact-link">Gửi email ngay</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-card contact-card-phone">
+                        <div class="contact-card-icon">📞</div>
+                        <div class="contact-card-content">
+                            <h5>Điện thoại</h5>
+                            <p class="contact-card-value">+86 133 3846 7295</p>
+                            <div class="contact-card-actions">
+                                <a href="tel:+8613338467295" class="contact-link">Gọi ngay</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-card contact-card-hours">
+                        <div class="contact-card-icon">⏰</div>
+                        <div class="contact-card-content">
+                            <h5>Giờ làm việc</h5>
+                            <p class="contact-card-value">Thứ 2 - Thứ 7</p>
+                            <div class="contact-card-actions">
+                                <span class="contact-link contact-link-static">9:00 - 18:00 (GMT+7)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:#e3f2fd">📍</div>
-                    <div>
-                        <h5 style="color:var(--gray-500)">Địa chỉ</h5>
-                        <p style="color:var(--dark)">Thành phố Thâm Quyến, tỉnh Quảng Đông, Trung Quốc</p>
-                        <p style="font-size:13px;color:var(--gray-500)">Cảng xuất khẩu: Cảng Yantian, Thâm Quyến</p>
+                <div class="contact-info-extra">
+                    <div class="contact-extra-item">
+                        <span class="contact-extra-icon">📍</span>
+                        <div>
+                            <h6>Địa chỉ</h6>
+                            <p>Thành phố Thâm Quyến, tỉnh Quảng Đông, Trung Quốc</p>
+                            <p class="contact-extra-note">Cảng xuất khẩu: Cảng Yantian, Thâm Quyến</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background:#f3e5f5">⏰</div>
+                <div class="contact-quick-response">
+                    <div class="contact-quick-icon">⚡</div>
                     <div>
-                        <h5 style="color:var(--gray-500)">Giờ làm việc</h5>
-                        <p style="color:var(--dark)">Thứ 2 - Thứ 7: 9:00 - 18:00 (GMT+7)</p>
-                        <p style="font-size:13px;color:var(--gray-500)">Chủ nhật: Nghỉ (vẫn phản hồi Zalo)</p>
+                        <h5>Phản hồi nhanh</h5>
+                        <p>Quét mã WhatsApp/WeChat hoặc gửi Zalo để được phản hồi trong vòng <strong>30 phút</strong> trong giờ làm việc.</p>
                     </div>
                 </div>
 
-                <!-- Quick Response -->
-                <div style="background:var(--primary-light);padding:20px;border-radius:var(--radius);margin-top:30px;border-left:4px solid var(--primary)">
-                    <h5 style="color:var(--primary-dark);margin-bottom:8px">⚡ Phản hồi nhanh</h5>
-                    <p style="font-size:14px;color:var(--gray-700);margin-bottom:0">
-                        Gửi tin nhắn Zalo để được phản hồi nhanh nhất. 
-                        Chúng tôi thường phản hồi trong vòng <strong>30 phút</strong> trong giờ làm việc.
-                    </p>
-                </div>
-
-                <!-- FAQ Quick -->
-                <div style="margin-top:30px">
-                    <h4 style="font-size:18px;margin-bottom:15px;color:var(--dark)">❓ Câu hỏi nhanh</h4>
-                    <div style="margin-bottom:12px">
-                        <strong style="color:var(--dark)">Q: Đơn hàng tối thiểu?</strong>
-                        <p style="font-size:14px;color:var(--gray-700);margin-top:4px">A: 4 xe/container. Đơn đầu tiên có thể 1-2 xe để thử nghiệm.</p>
+                <div class="contact-faq-quick">
+                    <h4>❓ Câu hỏi nhanh</h4>
+                    <div class="faq-quick-item">
+                        <strong>Đơn hàng tối thiểu?</strong>
+                        <p>4 xe/container. Đơn đầu tiên có thể 1-2 xe để thử nghiệm.</p>
                     </div>
-                    <div style="margin-bottom:12px">
-                        <strong style="color:var(--dark)">Q: Thời gian giao hàng?</strong>
-                        <p style="font-size:14px;color:var(--gray-700);margin-top:4px">A: 3-15 ngày từ cảng Trung Quốc đến Việt Nam.</p>
+                    <div class="faq-quick-item">
+                        <strong>Thời gian giao hàng?</strong>
+                        <p>3-15 ngày từ cảng Trung Quốc đến Việt Nam.</p>
                     </div>
-                    <div>
-                        <strong style="color:var(--dark)">Q: Thanh toán bằng gì?</strong>
-                        <p style="font-size:14px;color:var(--gray-700);margin-top:4px">A: USD hoặc RMB. Có thể thanh toán qua người trung gian tại VN.</p>
+                    <div class="faq-quick-item">
+                        <strong>Thanh toán bằng gì?</strong>
+                        <p>USD hoặc RMB. Có thể thanh toán qua người trung gian tại VN.</p>
                     </div>
                 </div>
             </div>
@@ -280,7 +331,8 @@
                 <div class="footer-social">
                     <a href="https://zalo.me/84123456789" target="_blank" title="Zalo">💬</a>
                     <a href="https://wa.me/8613338467295" target="_blank" title="WhatsApp">📱</a>
-                    <a href="mailto:sales@byd-vietnam-export.com" title="Email">✉️</a>
+                    <a href="mailto:youqianxu913@gmail.com" title="Email">✉️</a>
+                    <a href="#" title="WeChat (微信)" onclick="showWeChatQR();return false;">💚</a>
                 </div>
             </div>
             <div class="footer-col">
@@ -304,8 +356,9 @@
             <div class="footer-col">
                 <h5>Liên hệ</h5>
                 <ul>
-                    <li>📱 Zalo: +86 133 3846 7295</li>
-                    <li>📧 sales@byd-vietnam-export.com</li>
+                    <li>📱 Zalo/ĐT: +86 133 3846 7295</li>
+                    <li>💚 WeChat (微信)</li>
+                    <li>📧 youqianxu913@gmail.com</li>
                     <li>📍 Thâm Quyến, Trung Quốc</li>
                     <li>⏰ 9:00 - 18:00 (GMT+7)</li>
                 </ul>
