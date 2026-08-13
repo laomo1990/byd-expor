@@ -29,7 +29,6 @@
 </script>
 </head>
 <body>
-
 <!-- Navigation -->
 <nav class="navbar">
     <div class="container nav-inner">
@@ -51,6 +50,7 @@
 
 <!-- Hero -->
 <section class="hero">
+    <div class="hero-pattern"></div>
     <div class="container hero-content">
         <div>
             <h1>Nhà Cung Cấp Xe Điện BYD <span>Trực Tiếp Từ Trung Quốc</span></h1>
@@ -59,6 +59,10 @@
                 <a href="contact.html" class="btn btn-accent">📋 Nhận báo giá miễn phí</a>
                 <a href="cars.html" class="btn btn-outline-white">🚗 Xem danh mục xe</a>
             </div>
+            <form class="hero-quick-form" onsubmit="submitQuickQuote(event)">
+                <input type="tel" placeholder="Nhập số điện thoại để nhận báo giá ngay" required>
+                <button type="submit">Nhận giá →</button>
+            </form>
         </div>
         <div class="hero-stats">
             <div class="stat-card">
@@ -74,7 +78,7 @@
                 <div class="stat-label">Ngày giao hàng VN</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">200+</div>
+                <div class="stat-number">500+</div>
                 <div class="stat-label">Xe đã xuất khẩu</div>
             </div>
         </div>
@@ -105,6 +109,7 @@
                 </ul>
                 <div class="hot-price">
                     <span class="fob">¥8.94万 FOB</span>
+                    <span class="fob-vnd">~313 triệu VNĐ</span>
                     <span class="market">¥13.35万 thị trường</span>
                     <span class="save">Tiết kiệm 33%</span>
                 </div>
@@ -190,7 +195,7 @@
                     <li>✓ Tự lấy hàng tại cảng và vận chuyển nội địa</li>
                     <li>✓ Tự làm thủ tục đăng ký, đăng kiểm, bảo hiểm</li>
                     <li>✓ Tự chịu trách nhiệm sau bán hàng, sửa chữa, phụ tùng</li>
-                    <li>✓ Tự取得 giấy phép nhập khẩu và chứng nhận VTA</li>
+                    <li>✓ Tự xin giấy phép nhập khẩu và chứng nhận VTA</li>
                     <li>✓ Chịu mọi rủi ro sau khi giao hàng tại cảng</li>
                 </ul>
             </div>
@@ -241,6 +246,39 @@
     </div>
 </section>
 
+<!-- Certifications -->
+<section class="section cert-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🏆 Chứng nhận & Năng lực</span>
+            <h2 class="section-title">Đối Tác Uy Tín, Tài Liệu Đầy Đủ</h2>
+            <p class="section-desc">Chúng tôi có đầy đủ chứng nhận và kinh nghiệm xuất khẩu xe điện sang nhiều quốc gia</p>
+        </div>
+        <div class="cert-showcase">
+            <div class="cert-item">
+                <div class="cert-icon">📜</div>
+                <h5>Giấy phép xuất khẩu</h5>
+                <p>Đăng ký hải quan, kinh doanh xuất nhập khẩu</p>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">✅</div>
+                <h5>FORM E RCEP</h5>
+                <p>Chứng nhận xuất xứ, miễn thuế nhập khẩu 0%</p>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🚗</div>
+                <h5>Chứng nhận VTA</h5>
+                <p>Hỗ trợ chứng nhận an toàn kỹ thuật xe cơ giới</p>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon">🌍</div>
+                <h5>Xuất khẩu 6 quốc gia</h5>
+                <p>Việt Nam, Thái Lan, Indonesia, Malaysia, Philippines, Campuchia</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Tax Section -->
 <section class="section tax-section" id="tax">
     <div class="container">
@@ -284,7 +322,7 @@
                     <td>Áp dụng đến 2027</td>
                 </tr>
                 <tr>
-                    <td><strong>Tổng税负 dự kiến</strong></td>
+                    <td><strong>Tổng thuế dự kiến</strong></td>
                     <td style="color:var(--primary);font-weight:700">~13.4%</td>
                     <td style="color:var(--accent);font-weight:700">~45.7%</td>
                     <td>Trên giá CIF</td>
@@ -341,7 +379,7 @@
 </section>
 
 <!-- Testimonials -->
-<section class="section" style="background:var(--gray-100)">
+<section class="section testimonials-section">
     <div class="container">
         <div class="section-header">
             <span class="section-tag">⭐ Đánh giá</span>
@@ -359,16 +397,22 @@
                         <p>Đại lý xe, TP.HCM</p>
                     </div>
                 </div>
+                <div class="testimonial-proof">
+                    📦 Đã nhập 15 xe · 📅 Hợp tác từ 2025
+                </div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">"Mẫu xe độc quyền cho tôi lợi thế cạnh tranh. Không đại lý nào ở Thái Lan có thể bán Qin Plus DM-i - khách hàng rất thích."</p>
                 <div class="testimonial-author">
-                    <div class="author-avatar">T</div>
+                    <div class="author-avatar">S</div>
                     <div class="author-info">
-                        <h5>Mr. Tanaka</h5>
+                        <h5>Khách hàng Thái Lan</h5>
                         <p>Đại lý EV, Bangkok</p>
                     </div>
+                </div>
+                <div class="testimonial-proof">
+                    📦 Đã nhập 8 xe · 📅 Hợp tác từ 2025
                 </div>
             </div>
             <div class="testimonial-card">
@@ -380,6 +424,9 @@
                         <h5>Ông Minh</h5>
                         <p>Nhập khẩu xe, Hà Nội</p>
                     </div>
+                </div>
+                <div class="testimonial-proof">
+                    📦 Đã nhập 12 xe · 📅 Hợp tác từ 2025
                 </div>
             </div>
         </div>
@@ -425,17 +472,17 @@
             </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>FOB模式下，海运和清关费用大概多少?</span>
+                    <span>Theo mô hình FOB, phí vận chuyển biển và thông quan khoảng bao nhiêu?</span>
                     <span class="icon">+</span>
                 </div>
                 <div class="faq-answer"><p>Phí vận chuyển biển từ Thâm Quyến đến TP.HCM khoảng 3000-5000 RMB/xe (tùy số lượng). Phí thông quan và vận chuyển nội địa khoảng 2000-3000 RMB/xe. Tổng chi phí logistics khoảng 5000-8000 RMB/xe.</p></div>
             </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Nếu xe到港后有质量问题怎么办?</span>
+                    <span>Nếu xe đến cảng có vấn đề chất lượng thì sao?</span>
                     <span class="icon">+</span>
                 </div>
-                <div class="faq-answer"><p>Theo FOB điều kiện, rủi ro chuyển giao sau khi giao hàng tại cảng. Bạn nên kiểm tra xe tại cảng trước khi nhận. Nếu có vấn đề chất lượng nhà máy, chúng tôi hỗ trợ liên hệ BYD để khiếu nại. Bạn cần tự mua bảo hiểm vận chuyển.</p></div>
+                <div class="faq-answer"><p>Theo điều kiện FOB, rủi ro chuyển giao sau khi giao hàng tại cảng. Bạn nên kiểm tra xe tại cảng trước khi nhận. Nếu có vấn đề chất lượng nhà máy, chúng tôi hỗ trợ liên hệ BYD để khiếu nại. Bạn cần tự mua bảo hiểm vận chuyển.</p></div>
             </div>
         </div>
         <div style="text-align:center;margin-top:30px">
@@ -522,6 +569,5 @@
         }
     });
 </script>
-
 </body>
 </html>
