@@ -93,6 +93,17 @@
             <button class="filter-btn" onclick="filterCars('suv', this)">🚐 SUV (12)</button>
             <button class="filter-btn" onclick="filterCars('under10', this)">💰 Dưới 10万 (2)</button>
         </div>
+        <!-- Price Filter -->
+        <div class="price-filter">
+            <label>💰 Lọc theo giá FOB:</label>
+            <select onchange="filterByPrice(this.value)">
+                <option value="all">Tất cả mức giá</option>
+                <option value="under10">Dưới 10万 (~350 triệu VNĐ)</option>
+                <option value="10-15">10-15万 (~350-525 triệu VNĐ)</option>
+                <option value="15-20">15-20万 (~525-700 triệu VNĐ)</option>
+                <option value="over20">Trên 20万 (~700 triệu VNĐ+)</option>
+            </select>
+        </div>
 
         <!-- Car Grid -->
         <div class="car-grid" id="carGrid"></div>
