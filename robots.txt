@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://laomo1990.github.io/byd-expor/sitemap.xml
