@@ -131,6 +131,20 @@
     </div>
 </footer>
 
+<!-- Sticky Bottom Bar -->
+<div class="sticky-bottom-bar" id="stickyBottomBar">
+    <div class="sticky-bar-inner">
+        <div class="sticky-price">
+            <span class="main" id="stickyPrice">¥0万 FOB</span>
+            <span class="sub" id="stickyPriceVnd">~0 triệu VNĐ</span>
+        </div>
+        <div class="sticky-actions">
+            <a href="contact.html" class="btn btn-accent btn-sm">📋 Nhận báo giá</a>
+            <a href="https://zalo.me/84123456789" target="_blank" class="btn btn-primary btn-sm" id="stickyZalo">💬 Zalo</a>
+        </div>
+    </div>
+</div>
+
 <!-- Floating Buttons -->
 <div class="floating-buttons">
     <a href="https://zalo.me/84123456789" target="_blank" class="float-btn float-zalo" title="Chat Zalo">💬</a>
@@ -190,33 +204,9 @@ function loadCarDetail() {
         </div>
     `).join('');
 
-    // Related cars
+    // Related cars (use renderCarCard for consistency)
     const related = getRelatedCars(car.id, 3);
-    const relatedHtml = related.map(c => `
-        <div class="car-card">
-            <a href="car-detail.html?id=${c.id}">
-                <div class="car-image">
-                    <img src="${c.img}" alt="${c.name}" loading="lazy">
-                </div>
-            </a>
-            <div class="car-body">
-                <a href="car-detail.html?id=${c.id}">
-                    <div class="car-name">${c.name}</div>
-                    <div class="car-name-cn">${c.nameCn}</div>
-                </a>
-                <div class="car-specs">
-                    <span class="spec-item ${c.type==='BEV'?'bev':'dmi'}">${c.type}</span>
-                    <span class="spec-item">${c.range}</span>
-                </div>
-                <div class="car-prices">
-                    <span class="car-fob">¥${c.fob}万</span>
-                </div>
-                <div class="car-actions">
-                    <a href="car-detail.html?id=${c.id}" class="car-btn car-btn-detail">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-    `).join('');
+    const relatedHtml = related.map(c => renderCarCard(c)).join('');
 
     // Competitor comparison
     const comp = car.competitor;
@@ -278,7 +268,7 @@ function loadCarDetail() {
                 <div class="car-detail-price-box">
                     <div class="price-row">
                         <span>Giá FOB cảng Trung Quốc</span>
-                        <span>¥${car.fob}万</span>
+                        <span>¥${car.fob}万 <span class="price-vnd">(~${formatVND(car.vndFob)})</span></span>
                     </div>
                     <div class="price-row">
                         <span>Phí vận chuyển biển (ước tính)</span>
@@ -294,21 +284,21 @@ function loadCarDetail() {
                     </div>
                     <div class="price-row">
                         <span>Chi phí đến bờ ước tính</span>
-                        <span>¥${landed.landed}万</span>
+                        <span>¥${landed.landed}万 <span class="price-vnd">(~${formatVND(landed.vndLanded)})</span></span>
                     </div>
                     <div class="price-row">
                         <span>Giá bán lẻ đề xuất</span>
-                        <span>¥${landed.retail}万</span>
+                        <span>¥${landed.retail}万 <span class="price-vnd">(~${formatVND(landed.vndRetail)})</span></span>
                     </div>
                     <div class="price-row">
                         <span>Lợi nhuận đại lý ước tính</span>
-                        <span style="color:var(--accent)">¥${landed.profit}万 / xe</span>
+                        <span style="color:var(--accent)">¥${landed.profit}万 / xe <span class="price-vnd">(~${formatVND(landed.vndProfit)})</span></span>
                     </div>
                 </div>
 
                 <div class="car-detail-cta">
                     <a href="contact.html?model=${encodeURIComponent(car.name)}" class="btn btn-accent">📋 Nhận báo giá</a>
-                    <a href="https://zalo.me/84123456789" target="_blank" class="btn btn-outline">💬 Chat Zalo</a>
+                    <a href="${getZaloLink(car.name)}" target="_blank" class="btn btn-outline">💬 Chat Zalo</a>
                 </div>
 
                 <div style="background:#fff3e0;padding:15px;border-radius:8px;border-left:3px solid var(--accent)">
@@ -346,6 +336,14 @@ function loadCarDetail() {
             </div>
         </div>
     `;
+    
+    // Update sticky bottom bar
+    const stickyPrice = document.getElementById('stickyPrice');
+    const stickyPriceVnd = document.getElementById('stickyPriceVnd');
+    const stickyZalo = document.getElementById('stickyZalo');
+    if (stickyPrice) stickyPrice.textContent = `¥${car.fob}万 FOB`;
+    if (stickyPriceVnd) stickyPriceVnd.textContent = `~${formatVND(car.vndFob)}`;
+    if (stickyZalo) stickyZalo.href = getZaloLink(car.name);
 }
 
 function changeMainImage(src, el) {
